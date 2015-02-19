@@ -19,7 +19,7 @@ public class JugTAASApplication extends Application {
 
     public JugTAASApplication() {
 
-        Map<String, String> properties = new HashMap<>();
+        Map<String, String> properties = new HashMap<String, String>();
         properties.put("hibernate.connection.username", System.getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME"));
         properties.put("hibernate.connection.password", System.getenv("OPENSHIFT_POSTGRESQL_DB_PASSWORD"));
         properties.put("hibernate.connection.url", "jdbc:postgresql://"

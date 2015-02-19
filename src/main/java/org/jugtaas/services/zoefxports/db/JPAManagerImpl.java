@@ -154,7 +154,7 @@ public class JPAManagerImpl<E> extends AbstractManager<E> implements Manager<E> 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(entityClass);
         Root<E> root = cq.from(entityClass);
-        List<Predicate> predicates = new ArrayList<>();
+        List<Predicate> predicates = new ArrayList<Predicate>();
         for( String name: map.keySet() ){
             Predicate predicate=null;
             Path path = null;
@@ -216,7 +216,7 @@ public class JPAManagerImpl<E> extends AbstractManager<E> implements Manager<E> 
 
         // order by
         if( orderbys.size()>0 ) {
-            List<Order> orders = new ArrayList<>();
+            List<Order> orders = new ArrayList<Order>();
             for (int i = 0; i < orderbys.size(); i++) {
                 String orderby = orderbys.get(i);
                 Boolean reverse = reverses.get(i);
@@ -302,7 +302,7 @@ public class JPAManagerImpl<E> extends AbstractManager<E> implements Manager<E> 
                             // parentize children
                             for (Iterator it = collection.iterator(); it.hasNext(); ) {
                                 Object child = it.next();
-                                BeanAccess<E> fkBeanAccess = new BeanAccess<>(child, foreignKey);
+                                BeanAccess<E> fkBeanAccess = new BeanAccess<E>(child, foreignKey);
                                 fkBeanAccess.setValue(entity);
                             }
                         }

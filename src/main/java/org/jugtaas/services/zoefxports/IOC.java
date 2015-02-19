@@ -36,7 +36,7 @@ import java.util.HashMap;
  */
 public class IOC {
 
-    private static HashMap<String, HashMap<String, Object>> utilities = new HashMap<>();
+    private static HashMap<String, HashMap<String, Object>> utilities = new HashMap<String, HashMap<String, Object>>();
 
     /**
      * Registers the unnamed utility for the given interface.
@@ -61,7 +61,7 @@ public class IOC {
     public static synchronized void registerUtility(Object utility, Class iface, String name){
         HashMap<String, Object> hm = IOC.utilities.get(iface.getSimpleName());
         if( hm == null ){
-            hm = new HashMap<>();
+            hm = new HashMap<String, Object>();
         }
         hm.put(name, utility);
         IOC.utilities.put(iface.getSimpleName(), hm);

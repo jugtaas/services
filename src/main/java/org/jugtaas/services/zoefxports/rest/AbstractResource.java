@@ -34,9 +34,9 @@ public abstract class AbstractResource<T> implements Resource<T> {
                         @QueryParam("size") Integer size,
                         @Context UriInfo uriInfo){
 
-        Map<String, Object> criteria = new HashMap<>();
-        List<String> orderBys = new ArrayList<>();
-        List<Boolean> reverses = new ArrayList<>();
+        Map<String, Object> criteria = new HashMap<String, Object>();
+        List<String> orderBys = new ArrayList<String>();
+        List<Boolean> reverses = new ArrayList<Boolean>();
 
         // filterBy
         if( filterBy != null ){
@@ -79,7 +79,7 @@ public abstract class AbstractResource<T> implements Resource<T> {
                     operator = Operator.eq;
                 }
 
-                List<Object> operatorAndValue = new ArrayList<>();
+                List<Object> operatorAndValue = new ArrayList<Object>();
                 operatorAndValue.add(operator);
                 if( "bool".equals(type) ) {
                     if( "true".equals(value) ) {

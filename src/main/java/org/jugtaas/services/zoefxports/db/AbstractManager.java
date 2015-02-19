@@ -189,13 +189,13 @@ public abstract class AbstractManager<E> implements Manager<E>{
     */
 
     private List<String> orderByList(String orderby) {
-        List<String> orderbys = new ArrayList<>();
+        List<String> orderbys = new ArrayList<String>();
         orderbys.add(orderby);
         return orderbys;
     }
 
     private List<Boolean> reverseList(Boolean reverse) {
-        List<Boolean> orderbys = new ArrayList<>();
+        List<Boolean> orderbys = new ArrayList<Boolean>();
         orderbys.add(reverse);
         return orderbys;
     }
