@@ -1,14 +1,26 @@
 package org.jugtaas.services.entities;
 
+import javax.persistence.*;
+
 /**
  * User: tiziano
  * Date: 19/02/15
  * Time: 15:15
  */
+@Entity
+@Table(name="event", schema="public")
+@SequenceGenerator(name="genevent", sequenceName="event_id_seq", initialValue=1, allocationSize=1)
 public class JugEvent {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="genevent")
     private Long id;
+
+    @Column(name="title")
     private String title;
+
+    @Column(name="subtitle")
     private String subtitle;
 
     public Long getId() {

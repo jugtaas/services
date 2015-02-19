@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="jugtaasservices">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+
+            <!-- overriding in JugTAASApplication -->
+            <property name="hibernate.connection.url" value="jdbc:postgresql://127.0.0.1:5432/services"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.username" value="tiziano"/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+
+            <!-- c3p0 config http://www.hibernate.org/214.html -->
+            <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider"/>
+            <property name="hibernate.c3p0.acquire_increment" value="1"/>
+            <property name="hibernate.c3p0.idle_test_period" value="60"/>
+            <property name="hibernate.c3p0.min_size" value="1"/>
+            <property name="hibernate.c3p0.max_size" value="2"/>
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.c3p0.timeout" value="0"/>
+            <property name="hibernate.c3p0.acquireRetryAttempts" value="1"/>
+            <property name="hibernate.c3p0.acquireRetryDelay" value="250"/>
+
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hbm2ddl.auto" value="create-drop"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
