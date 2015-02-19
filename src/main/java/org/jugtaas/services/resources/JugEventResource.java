@@ -1,6 +1,7 @@
 package org.jugtaas.services.resources;
 
 import org.jugtaas.services.entities.JugEvent;
+import org.jugtaas.services.zoefxports.rest.AbstractResource;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -12,8 +13,14 @@ import java.net.URI;
  * Time: 15:18
  */
 @Path("events")
-public class JugEventResource {
+public class JugEventResource  extends AbstractResource<JugEvent> {
 
+    @Override
+    public Class getEntityClass() {
+        return JugEvent.class;
+    }
+
+    /*
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,6 +40,6 @@ public class JugEventResource {
                 .entity(dummyEvent)
                 .build();
         return response;
-    }
+    }*/
 
 }
