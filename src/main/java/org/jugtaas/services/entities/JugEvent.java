@@ -40,7 +40,7 @@ public class JugEvent {
     }
 
     public String getSubtitle() {
-        return subtitle;
+        return "[s]" + subtitle;
     }
 
     public void setSubtitle(String subtitle) {
