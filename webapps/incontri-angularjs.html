@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jugtaasApp">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="img/favicon.png">
+
+        <title>JUG Trento - Incontri</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- timeline -->
+        <link rel="stylesheet" type="text/css" href="timeline/css/component.css" />
+        <script src="timeline/js/modernizr.custom.js"></script>
+
+        <script src="lib/angular.min.js"></script>
+        <script src="js/controllers.js"></script>
+
+        <!-- Custom styles for this template -->
+        <link href="css/justified-nav.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'>
+
+    </head>
+
+    <body ng-controller="EventListCtrl">
+
+        <div class="container">
+
+            <!-- Navigation bar -->
+            <div class="masthead">
+                <h4 class="text-masthead"><img src="img/logojugtn.gif" alt="Logo" /> Java User Group Trento</h4>
+                <ul class="nav nav-justified">
+                    <li ><a href="index.html">Home</a></li>
+                    <li class="active"><a href="incontri.html">Incontri</a></li>
+                    <li><a href="mailinglist.html">Maling List</a></li>
+                    <li><a href="utenti.html">Utenti</a></li>
+                    <li><a href="manifesto.html">Manifesto</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </div>
+
+            <!-- Jumbotron -->
+            <div class="jumbotron">
+                <h1>Incontri</h1>
+                <p class="lead">Gli incontri sono un momento di aggregazione importate per gli utenti del gruppo. Vedersi faccia a faccia, ascoltare e confrontarsi è sempre un'esperienza che  permette di arricchire.</p>
+                <p><a class="btn btn-lg btn-success" href="incontri-prossimo.html" role="button">Prossimo incontro</a></p>
+                <p class="lead">Invito di presentazione di temi Java e dintorni è aperto a tutti quelli che desiderano condividere le proprie esperienze. I formati di presentazione possono essere molti: seminario, hands-on, workshop... .</p>
+                <p class="lead">Il JUG è fatto di volontari, nei nostri incontri sono sempre stati ripsettati i punti espressi nel <a href="manifesto.html">manifesto</a> .</p>
+                <p class="lead">Per maggiori informazioni non esitate a contattare uno dei <a href="contatti.html">coordinatori</a> .</p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="container">
+                <header class="clearfix">
+                    <h1>Timeline</h1>
+                    <!--
+                        <nav>
+                                <a href="http://tympanus.net/Blueprints/ScrollingLayout/" class="bp-icon bp-icon-prev" data-info="previous Blueprint"><span>Previous Blueprint</span></a>
+                                <! --a href="" class="bp-icon bp-icon-next" data-info="next Blueprint"><span>Next Blueprint</span></a- ->
+                                <a href="http://tympanus.net/codrops/?p=14941" class="bp-icon bp-icon-drop" data-info="back to the Codrops article"><span>back to the Codrops article</span></a>
+                                <a href="http://tympanus.net/codrops/category/blueprints/" class="bp-icon bp-icon-archive" data-info="Blueprints archive"><span>Go to the archive</span></a>
+                        </nav>
+                    -->
+                </header>	
+                <div class="main">
+                    <ul class="cbp_tmtimeline" ng-repeat="event in events">
+                        <li>
+                            <time class="cbp_tmtime" datetime="2014-12-03 19:30"><span>14 Gennaio 2015</span> <span>19:30</span></time>
+                            <div class="cbp_tmicon cbp_tmicon-arrow-r"></div>
+                            <div class="cbp_tmlabel">
+                                <h2>{{event.title}}</h2>
+                                <h3>Relatore: Davide Montesin</h3>
+                                <p><i><a href="http://www.semanticvalley.it/">Semantic Valley</a>, Povo</i></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Site footer -->
+            <div class="footer">
+                <p>JugTrento è un libero gruppo di utenti Java - Java™ è un marchio registrato da Oracle Corporation.</p>
+            </div>
+
+
+
+            <!-- Bootstrap core JavaScript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+
+        </div>
+    </body>
+</html>
