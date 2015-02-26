@@ -1,6 +1,7 @@
 package org.jugtaas.services.entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * User: tiziano
@@ -22,6 +23,12 @@ public class JugEvent {
 
     @Column(name="subtitle")
     private String subtitle;
+
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "speaker",
+            joinColumns = {@JoinColumn(name = "event", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "person", referencedColumnName = "id")})
+    private Collection<Person> speakers;
 
     public Long getId() {
         return id;
@@ -45,6 +52,14 @@ public class JugEvent {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+    }
+
+    public Collection<Person> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(Collection<Person> speakers) {
+        this.speakers = speakers;
     }
 
     @Override
