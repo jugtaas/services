@@ -21,6 +21,37 @@
   ],
   "paths": {
     "/events": {
+      "post": {
+        "description": "Creates a new Event.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "event",
+            "in": "body",
+            "description": "The new Event (es. { \"title\": \"foo\", \"subtitle\": \"bar\", \"speakers\": [{\"id\":2},{\"id\":4}]  })",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "default": {
+            "description": "Unattended error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        }
+      },
       "get": {
         "description": "Event's list.",
         "produces": [
@@ -77,37 +108,6 @@
           },
           "default": {
             "description": "unattended error",
-            "schema": {
-              "$ref": "#/definitions/errorModel"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new Event.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "event",
-            "in": "body",
-            "description": "The new Event (es. { \"title\": \"foo\", \"subtitle\": \"bar\", \"speakers\": [{\"id\":2},{\"id\":4}]  })",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Event"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/Event"
-            }
-          },
-          "default": {
-            "description": "Unattended error",
             "schema": {
               "$ref": "#/definitions/errorModel"
             }
@@ -175,6 +175,37 @@
       }
     },
     "/persons": {
+      "post": {
+        "description": "Creates a new Person.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "The new Person (es. { \"name\": \"foo\", \"surname\": \"bar\" })",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          },
+          "default": {
+            "description": "Unattended error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        }
+      },
       "get": {
         "description": "Person's list.",
         "produces": [
@@ -231,37 +262,6 @@
           },
           "default": {
             "description": "unattended error",
-            "schema": {
-              "$ref": "#/definitions/errorModel"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new Person.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "person",
-            "in": "body",
-            "description": "The new Person (es. { \"name\": \"foo\", \"surname\": \"bar\" })",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Person"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/Person"
-            }
-          },
-          "default": {
-            "description": "Unattended error",
             "schema": {
               "$ref": "#/definitions/errorModel"
             }
