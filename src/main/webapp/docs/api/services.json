@@ -144,7 +144,33 @@
           "404": {
             "description": "Not found"
           }
-
+        }
+      },
+      "delete": {
+        "description": "Deletes an Event.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Event's id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "ID not valid"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
@@ -273,6 +299,33 @@
             "description": "Not found"
           }
 
+        }
+      },
+      "delete": {
+        "description": "Deletes a Person.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Person's id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "ID not valid"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     }

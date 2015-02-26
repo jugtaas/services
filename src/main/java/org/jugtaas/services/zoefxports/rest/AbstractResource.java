@@ -164,6 +164,16 @@ public abstract class AbstractResource<T> implements Resource<T> {
         return RestHelper.POST(saved, uriInfo);
     }
 
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") Long id, @Context UriInfo uriInfo){
+        Manager<T> manager = getManager();
+        T delenda = manager.get(id);
+        manager.delete(delenda);
+        return RestHelper.DELETE(delenda, uriInfo);
+    }
+
     public Manager<T> getManager() {
         return IOC.queryUtility(Database.class).createManager(getEntityClass());
     }

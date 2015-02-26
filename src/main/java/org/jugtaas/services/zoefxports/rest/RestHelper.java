@@ -46,4 +46,11 @@ public class RestHelper {
         return response;
     }
 
+    public static Response DELETE(Object entity, UriInfo uriInfo){
+        Response response = Response
+                .status(Response.Status.NO_CONTENT)
+                .build();
+        return response;
+    }
+
 }
