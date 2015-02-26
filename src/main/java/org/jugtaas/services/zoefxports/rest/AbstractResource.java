@@ -178,5 +178,14 @@ public abstract class AbstractResource<T> implements Resource<T> {
         return IOC.queryUtility(Database.class).createManager(getEntityClass());
     }
 
+    @PUT
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(@PathParam("id") Long id, T object, @Context UriInfo uriInfo){
+        Manager<T> manager = getManager();
+        // XXX: id mandatory in json!
+        manager.save(object);
+        return RestHelper.PUT(object, uriInfo);
+    }
 
 }
