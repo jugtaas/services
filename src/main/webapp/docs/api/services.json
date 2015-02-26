@@ -146,6 +146,45 @@
           }
         }
       },
+      "put": {
+        "description": "Updates an existing Event",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Event's id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "event",
+            "in": "body",
+            "description": "The updated Event (es. { \"id\":1, \"title\": \"new title\", \"subtitle\": \"new subtitle\" })",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      },
       "delete": {
         "description": "Deletes an Event.",
         "produces": [
@@ -299,6 +338,45 @@
             "description": "Not found"
           }
 
+        }
+      },
+      "put": {
+        "description": "Updates an existing Person",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Person's id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "event",
+            "in": "body",
+            "description": "The updated Person (es. { \"id\":1, \"name\": \"new name\" })",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Person not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
         }
       },
       "delete": {

@@ -53,4 +53,25 @@ public class RestHelper {
         return response;
     }
 
+    public static Response PUT(Object entity, UriInfo uriInfo){
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        URI uri = builder.build();
+        Response response = Response
+                .status(Response.Status.OK)
+                .link(uri, "self")
+                .entity(entity)
+                .build();
+        return response;
+    }
+
+    public static Response notFound(UriInfo uriInfo){
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        URI uri = builder.build();
+        Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .link(uri, "self")
+                .build();
+        return response;
+    }
+
 }
