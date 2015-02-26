@@ -14,7 +14,7 @@ public class Speaker {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="genperson")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="genspeaker")
     private Long id;
 
     @JoinColumn(name = "person", referencedColumnName = "id")
