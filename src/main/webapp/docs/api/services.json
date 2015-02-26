@@ -147,12 +147,139 @@
 
         }
       }
+    },
+    "/persons": {
+      "get": {
+        "description": "Person's list.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "filterBy",
+            "in": "query",
+            "description": "filter criteria",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "order by criteria",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv"
+          },
+          {
+            "name": "startIndex",
+            "in": "query",
+            "description": "start index",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "max size",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Persons",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Person"
+              }
+            }
+          },
+          "default": {
+            "description": "unattended error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new Person.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "The new Person (es. { \"name\": \"foo\", \"surname\": \"bar\" })",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          },
+          "default": {
+            "description": "Unattended error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        }
+      }
+    },
+    "/persons/{id}": {
+      "get": {
+        "description": "Person {id}.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Person's id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Person"
+            }
+          },
+          "400": {
+            "description": "ID not valid"
+          },
+          "404": {
+            "description": "Not found"
+          }
+
+        }
+      }
     }
   },
   "definitions": {
     "Event": {
       "required": [
-        "id",
         "title"
       ],
       "properties": {
@@ -164,6 +291,35 @@
           "type": "string"
         },
         "subtitle": {
+          "type": "string"
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Person"
+          }
+        }
+      }
+    },
+    "Person": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "url": {
           "type": "string"
         }
       }
