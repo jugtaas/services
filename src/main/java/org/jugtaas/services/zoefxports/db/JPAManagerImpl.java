@@ -58,6 +58,11 @@ public class JPAManagerImpl<E> extends AbstractManager<E> implements Manager<E> 
     }
 
     @Override
+    public Object getId(E entity){
+        return entityManagerFactory.getPersistenceUnitUtil().getIdentifier(entity);
+    }
+
+    @Override
     public E create() {
         try {
             return entityClass.newInstance();

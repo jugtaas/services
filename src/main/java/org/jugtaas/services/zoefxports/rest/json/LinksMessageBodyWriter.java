@@ -19,9 +19,9 @@ import java.util.List;
  * Date: 18/11/14
  * Time: 10:05
  */
-//@Provider
-//@Produces(MediaType.APPLICATION_JSON)
-public class ListMessageBodyWriter<T> implements MessageBodyWriter<T> {
+@Provider
+@Produces(MediaType.APPLICATION_JSON)
+public class LinksMessageBodyWriter<T> implements MessageBodyWriter<T> {
     @Override
     public boolean isWriteable(Class aClass, Type type, Annotation[] annotations, MediaType mediaType) {
         return "java.util.ArrayList".equals(aClass.getName());
@@ -36,11 +36,12 @@ public class ListMessageBodyWriter<T> implements MessageBodyWriter<T> {
     public void writeTo(Object o, Class aClass, Type type, Annotation[] annotations, MediaType mediaType, MultivaluedMap multivaluedMap, OutputStream outputStream) throws IOException, WebApplicationException {
         ObjectMapper mapper = new ObjectMapper();
         if( o instanceof List ) {
-            String out = "[";
-            List<T> entities = (List<T>) o;
+            String out = "{ \"_links\": {";
+            List<String> links = (List<String>) o;
             //outputStream.write("[".getBytes());
             Boolean first = Boolean.TRUE;
-            for (T entity : entities) {
+            Integer i = 0;
+            for (String link : links) {
                 if (first) {
                     first = Boolean.FALSE;
                 } else {
@@ -48,12 +49,14 @@ public class ListMessageBodyWriter<T> implements MessageBodyWriter<T> {
                     out += ",";
                 }
                 //mapper.writeValue(outputStream, entity);
-                out += mapper.writeValueAsString(entity);
+                out += "\"" + i + "\": " + mapper.writeValueAsString(link);
+                i++;
             }
             //outputStream.write("]".getBytes());
-            out += "]";
+            out += "}}";
             outputStream.write(out.getBytes());
         } else {
+            System.out.println("not List");
             mapper.writeValue(outputStream, o);
         }
     }

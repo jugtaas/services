@@ -37,6 +37,8 @@ import java.util.Map;
  */
 public interface Manager<E> {
 
+    Object getId(E entity);
+
     E save(E entity);
 
     void save(List<E> entities);

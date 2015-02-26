@@ -144,7 +144,17 @@ public abstract class AbstractResource<T> implements Resource<T> {
                 reverses.add(reverse);
             }
         }
-        return RestHelper.GET(getManager().query(criteria, orderBys, reverses, size, startIndex), uriInfo);
+        List<T> entities = getManager().query(criteria, orderBys, reverses, size, startIndex);
+        List<String> links = new ArrayList<String>();
+        String path = uriInfo.getAbsolutePath().toString();
+        if( !path.endsWith("/") ) {
+            path += "/";
+        }
+        for( T entity: entities ){
+            String link = path + getManager().getId(entity).toString();
+            links.add(link);
+        }
+        return RestHelper.GET(links, uriInfo);
     }
 
     @POST
