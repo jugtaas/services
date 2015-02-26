@@ -34,6 +34,7 @@ import org.jugtaas.services.zoefxports.rest.Operator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.OneToMany;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.lang.annotation.Annotation;
@@ -284,32 +285,31 @@ public class JPAManagerImpl<E> extends AbstractManager<E> implements Manager<E> 
      */
     private void parentize(E entity){
         for(Field f: entityClass.getDeclaredFields()){
-            for( Annotation a: f.getAnnotations()){
-                // discover the OneToMany
-                if( a.annotationType().equals(javax.persistence.OneToMany.class) ) {
-                    String name = f.getName();
-                    BeanAccess<Collection> collectionBeanAccess = new BeanAccess<Collection>(entity, name);
-                    Collection collection = collectionBeanAccess.getValue();
-                    if( collection != null && collection.size()>0 ){
-                        // discover the "mapped by" foreign key
-                        String foreignKey=null;
-                        try {
-                            Method mappedBy = a.annotationType().getDeclaredMethod("mappedBy");
-                            foreignKey = (String) mappedBy.invoke(a);
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                        if( foreignKey != null ) {
-                            // parentize children
-                            for (Iterator it = collection.iterator(); it.hasNext(); ) {
-                                Object child = it.next();
-                                BeanAccess<E> fkBeanAccess = new BeanAccess<E>(child, foreignKey);
-                                fkBeanAccess.setValue(entity);
-                            }
+            // discover the OneToMany
+            if( f.getAnnotation(javax.persistence.OneToMany.class)!=null && f.getAnnotation(javax.persistence.JoinTable.class)==null ) {
+                OneToMany a = f.getAnnotation(OneToMany.class);
+                String name = f.getName();
+                BeanAccess<Collection> collectionBeanAccess = new BeanAccess<Collection>(entity, name);
+                Collection collection = collectionBeanAccess.getValue();
+                if( collection != null && collection.size()>0 ){
+                    // discover the "mapped by" foreign key
+                    String foreignKey=null;
+                    try {
+                        Method mappedBy = a.annotationType().getDeclaredMethod("mappedBy");
+                        foreignKey = (String) mappedBy.invoke(a);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    if( foreignKey != null ) {
+                        // parentize children
+                        for (Iterator it = collection.iterator(); it.hasNext(); ) {
+                            Object child = it.next();
+                            BeanAccess<E> fkBeanAccess = new BeanAccess<E>(child, foreignKey);
+                            fkBeanAccess.setValue(entity);
                         }
                     }
                 }

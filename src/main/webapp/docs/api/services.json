@@ -92,7 +92,7 @@
           {
             "name": "event",
             "in": "body",
-            "description": "The new Event (es. { \"title\": \"foo\", \"subtitle\": \"bar\" })",
+            "description": "The new Event (es. { \"title\": \"foo\", \"subtitle\": \"bar\", \"speakers\": [{\"id\":2},{\"id\":4}]  })",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Event"
