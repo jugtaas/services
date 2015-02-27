@@ -3,10 +3,17 @@ var jugtaasApp = angular.module('jugtaasApp', []);
 jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 	
 	var onSuccess = function(data) {
-		$scope.events = data;
+		var events = [];
+		$.each(data._links, function(key, url) {
+			$http.get(url)
+				.success(function(data) {
+					events[parseInt(key)] = data;
+				});
+		});
+
+		$scope.events =  events;
 	};
 
-	//$http.get('http://services-jugtaas.rhcloud.com/services/events')
 	$http.get('services/events')
 	.success(onSuccess)
 	.error(function(data, status, headers, config) {
