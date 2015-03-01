@@ -23,7 +23,11 @@ public abstract class AbstractResource<T> implements Resource<T> {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") Long id, @Context UriInfo uriInfo){
-        return RestHelper.GET(getManager().get(id), uriInfo);
+        T entity = getManager().get(id);
+        if( entity==null ){
+            RestHelper.notFound(uriInfo);
+        }
+        return RestHelper.GET(entity, uriInfo);
     }
 
     @GET
@@ -170,6 +174,9 @@ public abstract class AbstractResource<T> implements Resource<T> {
     public Response delete(@PathParam("id") Long id, @Context UriInfo uriInfo){
         Manager<T> manager = getManager();
         T delenda = manager.get(id);
+        if( delenda==null ){
+            return RestHelper.notFound(uriInfo);
+        }
         manager.delete(delenda);
         return RestHelper.DELETE(delenda, uriInfo);
     }
@@ -178,5 +185,22 @@ public abstract class AbstractResource<T> implements Resource<T> {
         return IOC.queryUtility(Database.class).createManager(getEntityClass());
     }
 
+    @PUT
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(@PathParam("id") Long id, T object, @Context UriInfo uriInfo){
+        Manager<T> manager = getManager();
+        T entity = manager.get(id);
+        if( entity==null ){
+            RestHelper.notFound(uriInfo);
+        }
+        Object id1 = manager.getId(object);
+        if( id1==null || !id1.equals(id)){
+            // XXX: id mandatory in json!
+            RestHelper.notFound(uriInfo);
+        }
+        manager.save(object);
+        return RestHelper.PUT(object, uriInfo);
+    }
 
 }
