@@ -76,13 +76,17 @@
                     -->
                 </header>	
                 <div class="main">
-                    <ul class="cbp_tmtimeline" ng-repeat="event in events">
-                        <li>
+                    <ul class="cbp_tmtimeline">
+                        <li ng-repeat="event in events">
                             <time class="cbp_tmtime" datetime="2014-12-03 19:30"><span>14 Gennaio 2015</span> <span>19:30</span></time>
                             <div class="cbp_tmicon cbp_tmicon-arrow-r"></div>
                             <div class="cbp_tmlabel">
                                 <h2>{{event.title}}</h2>
-                                <h3>Relatore: {{event.speakers}}</h3>
+                                <h3>Relatore:
+                                    <span ng-repeat="speaker in event.speakers">
+                                        {{speaker.name}} {{speaker.surname}}{{$last ? '' : ', '}}
+                                    </span>
+                                </h3>
                                 <p><i><a href="http://www.semanticvalley.it/">Semantic Valley</a>, Povo</i></p>
                             </div>
                         </li>
