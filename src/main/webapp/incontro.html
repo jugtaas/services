@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jugtaasApp">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="img/favicon.png">
+
+        <title>JUG Trento - Incontro</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- timeline -->
+        <link rel="stylesheet" type="text/css" href="timeline/css/component.css" />
+        <script src="timeline/js/modernizr.custom.js"></script>
+
+        <script src="lib/angular.min.js"></script>
+        <script src="js/controllers.js"></script>
+
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+        <!-- Custom styles for this template -->
+        <link href="css/justified-nav.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <!-- Navigation bar -->
+            <div class="masthead">
+                <h4 class="text-masthead"><img src="img/logojugtn.gif" alt="Logo" /> Java User Group Trento</h4>
+                <ul class="nav nav-justified">
+                    <li ><a href="index.html">Home</a></li>
+                    <li class="active"><a href="incontri.html">Incontri</a></li>
+                    <li><a href="mailinglist.html">Maling List</a></li>
+                    <li><a href="utenti.html">Utenti</a></li>
+                    <li><a href="manifesto.html">Manifesto</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </div>
+
+            <!-- Jumbotron -->
+            <div class="jumbotron">
+                <div ng-controller="EventController">
+                  <form novalidate class="simple-form">
+                    Title*: <input type="text" ng-model="event.title" /><br />
+                    Subtitle: <input type="text" ng-model="event.subtitle" /><br />
+                    <input type="datetime-local" ng-model="event.dateandtime" placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01T00:00:00" max="2025-12-31T00:00:00" required />
+                    Doodle (URL): <input type="url" ng-model="event.url" /><br />
+                    Place: <input type="text" ng-model="event.place" /><br />
+                    Abstract: <textarea type="text" ng-model="event.abstract"></textarea><br />
+                    Slideshow (URL): <input type="url" ng-model="event.slideshow" /><br />
+                    <input type="button" ng-click="reset()" value="Reset" />
+                    <input type="submit" ng-click="update(user)" value="Save" />
+                  </form>
+                  <pre>form = {{event | json}}</pre>
+                  <pre>master = {{master | json}}</pre>
+                </div>
+            </div>
+
+            <!-- Site footer -->
+            <div class="footer">
+                <p>JugTrento è un libero gruppo di utenti Java - Java™ è un marchio registrato da Oracle Corporation.</p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -60,3 +60,22 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 	})
   	;
 });
+
+jugtaasApp.controller('EventController', function($scope, $http) {
+
+	$http.get('services/events/1')
+	.success(function(data) {
+		delete data.speakers;
+		$scope.event = data;
+	});
+
+	$scope.update = function(event) {
+	$scope.event = angular.copy(event);
+	};
+
+	$scope.reset = function() {
+	$scope.event = angular.copy($scope.event);
+	};
+
+	$scope.reset();
+  });
