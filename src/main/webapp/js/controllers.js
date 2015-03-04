@@ -1,4 +1,21 @@
-var jugtaasApp = angular.module('jugtaasApp', []);
+var jugtaasApp = angular.module('jugtaasApp', ['ngRoute']);
+
+jugtaasApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/events', {
+        templateUrl: 'partials/incontri.html',
+        controller: 'EventListCtrl'
+      }).
+      when('/events/:id', {
+        templateUrl: 'partials/incontro.html',
+        controller: 'EventController'
+      }).
+      otherwise({
+        redirectTo: 'partials/incontri.html',
+        controller: 'EventListCtrl'
+      });
+  }]);
 
 function expandLinks(links) {
 	var ret = [];
@@ -61,21 +78,28 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
   	;
 });
 
-jugtaasApp.controller('EventController', function($scope, $http) {
+jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
 
-	$http.get('services/events/1')
+	$http.get('services/events/' + $routeParams.id)
 	.success(function(data) {
 		delete data.speakers;
 		$scope.event = data;
 	});
 
 	$scope.update = function(event) {
-	$scope.event = angular.copy(event);
+		$scope.event = angular.copy(event);
+
+		$scope.event.id = 2;
+
+		$http.put('services/events/2', $scope.event)
+		.success(function(data) {
+			alert('update success');
+		});
 	};
 
 	$scope.reset = function() {
-	$scope.event = angular.copy($scope.event);
+		$scope.event = angular.copy($scope.event);
 	};
 
-	$scope.reset();
+	//$scope.reset();
   });

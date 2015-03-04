@@ -1,0 +1,17 @@
+<div class="jumbotron">
+    <div>
+      <form novalidate class="simple-form">
+        Title*: <input type="text" ng-model="event.title" /><br />
+        Subtitle: <input type="text" ng-model="event.subtitle" /><br />
+        <input type="datetime-local" ng-model="event.dateandtime" placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01:00:00" max="2025-12-31:00:00" required /><br />
+        Doodle (URL): <input type="url" ng-model="event.url" /><br />
+        Place: <input type="text" ng-model="event.place" /><br />
+        Abstract: <textarea type="text" ng-model="event.abstract"></textarea><br />
+        Slideshow (URL): <input type="url" ng-model="event.slideshow" /><br />
+        <input type="button" ng-click="reset()" value="Reset" />
+        <input type="submit" ng-click="update(event)" value="Save" />
+      </form>
+      <pre>form = {{event | json}}</pre>
+      <pre>master = {{master | json}}</pre>
+    </div>
+</div>
