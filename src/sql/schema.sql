@@ -28,3 +28,16 @@ create table speaker
   person bigint NOT NULL
 );
 alter table only speaker add constraint speaker_pkey primary key (id);
+
+create table authuser
+(
+  username varchar(12) not null primary key,
+  password varchar(12) not null
+);
+
+create table authrole
+(
+  username varchar(12) not null,
+  rolename varchar(12) not null,
+  primary key(username, rolename)
+);
