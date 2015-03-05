@@ -9,7 +9,7 @@
                 <time class="cbp_tmtime" datetime="2014-12-03 19:30"><span>14 Gennaio 2015</span> <span>19:30</span></time>
                 <div class="cbp_tmicon cbp_tmicon-arrow-r"></div>
                 <div class="cbp_tmlabel">
-                    <h2>{{event.title}}</h2>
+                    <h2><a href="#/events/{{event.id}}">{{event.title}}</a></h2>
                     <h3>Relatore:
                         <span ng-repeat="speaker in event.speakers">
                         <a ng-if="speaker.url" href="{{speaker.url}}">{{speaker.name}} {{speaker.surname}}</a>

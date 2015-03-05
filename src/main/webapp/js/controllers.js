@@ -7,6 +7,10 @@ jugtaasApp.config(['$routeProvider',
         templateUrl: 'partials/incontri.html',
         controller: 'EventListCtrl'
       }).
+      when('/events/new', {
+        templateUrl: 'partials/incontro.html',
+        controller: 'EventController'
+      }).
       when('/events/:id', {
         templateUrl: 'partials/incontro.html',
         controller: 'EventController'
@@ -15,7 +19,8 @@ jugtaasApp.config(['$routeProvider',
         redirectTo: 'partials/incontri.html',
         controller: 'EventListCtrl'
       });
-  }]);
+  }
+]);
 
 function expandLinks(links) {
 	var ret = [];
@@ -51,49 +56,36 @@ function speakersToString(speakers) {
 }
 
 jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
-	
-	var onSuccess = function(data) {
+
+	$http.get('services/events')
+	.success(function(data) {
 		var events = expandLinks(data._links);
 		for(idx in events) {
 			var event = events[idx];
-			/*
-			if(event.speakers) {
-				event.speakers = speakersToString(event.speakers);
-			}
-			*/
 		}
 		$scope.events =  events;
-	};
-
-	$http.get('services/events')
-	.success(onSuccess)
-	.error(function(data, status, headers, config) {
-		console.log("fallback events call");
-		$http.get('../data/events.json')
-		.success(onSuccess)
-		.error(function(data, status, headers, config) {
-			console.log("Can't retrieve event list");
-		});
-	})
-  	;
+	});
 });
 
 jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
 
-	$http.get('services/events/' + $routeParams.id)
-	.success(function(data) {
-		delete data.speakers;
-		$scope.event = data;
-	});
-
 	$scope.update = function(event) {
 		$scope.event = angular.copy(event);
 
-		$scope.event.id = 2;
+		var id = $scope.event.id;
 
-		$http.put('services/events/2', $scope.event)
+		$http.put('services/events/' + id, $scope.event)
 		.success(function(data) {
 			alert('update success');
+		});
+	};
+
+	$scope.create = function(event) {
+		$scope.event = angular.copy(event);
+
+		$http.post('services/events/', $scope.event)
+		.success(function(data) {
+			alert('create success');
 		});
 	};
 
@@ -102,4 +94,14 @@ jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
 	};
 
 	//$scope.reset();
+
+	if(!$routeParams.id) {
+		return;
+	}
+
+	$http.get('services/events/' + $routeParams.id)
+	.success(function(data) {
+		delete data.speakers;
+		$scope.event = data;
+	});
   });
