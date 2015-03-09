@@ -9,11 +9,11 @@ jugtaasApp.config(['$routeProvider',
       }).
       when('/events/new', {
         templateUrl: 'partials/incontro.html',
-        controller: 'EventController'
+        //controller: 'EventController'
       }).
       when('/events/:id', {
         templateUrl: 'partials/incontro.html',
-        controller: 'EventController'
+        //controller: 'EventController'
       }).
       otherwise({
         redirectTo: 'partials/incontri.html',
@@ -67,11 +67,18 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 	});
 });
 
-jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
+jugtaasApp.controller('EventController', function($scope, $http, $routeParams, $q) {
+
+	$scope.event = {};
+
+	var idToObject = function(id) {
+		return {id: id};
+	};
 
 	$scope.update = function(event) {
 		$scope.event = angular.copy(event);
 
+		//$scope.event.speakers = $scope.event.speakers.map(idToObject);
 		var id = $scope.event.id;
 
 		$http.put('services/events/' + id, $scope.event)
@@ -82,6 +89,8 @@ jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
 
 	$scope.create = function(event) {
 		$scope.event = angular.copy(event);
+
+		$scope.event.speakers = $scope.event.speakers.map(idToObject);
 
 		$http.post('services/events/', $scope.event)
 		.success(function(data) {
@@ -99,9 +108,43 @@ jugtaasApp.controller('EventController', function($scope, $http, $routeParams) {
 		return;
 	}
 
-	$http.get('services/events/' + $routeParams.id)
-	.success(function(data) {
-		delete data.speakers;
-		$scope.event = data;
-	});
-  });
+	var findById = function(id, list) {
+		for(idx in list) {
+			var element = list[idx];
+			if(element.id == id) {
+				return element;
+			}
+		}
+	}
+
+	var getEvent = $http.get('services/events/' + $routeParams.id);
+	var getPersons = $http.get('services/persons');
+
+	var getSpeakersFrom = function(speakers, persons) {
+		for(idx in speakers) {
+			var speaker = speakers[idx];
+
+			for(idx in $scope.persons) {
+				var person = $scope.persons[idx];
+				if(person.id == speaker.id) {
+					speaker = person;
+					break;
+				}
+			}
+
+			speakers[idx] = speaker;
+		}
+
+		return speakers;
+	};
+
+
+	$q.all([getEvent, getPersons]).then(function(results) { 
+		$scope.event = results[0].data;
+		var persons = expandLinks(results[1].data._links);
+
+		$scope.persons = persons;
+
+		$scope.event.speakers = getSpeakersFrom($scope.event.speakers, persons);
+    });
+});
