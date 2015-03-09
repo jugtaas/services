@@ -123,6 +123,17 @@
                resourceName="UserDatabase"/>
       </Realm>
 
+        <Realm className="org.apache.catalina.realm.JDBCRealm"
+               driverName="org.postgresql.Driver"
+               connectionURL="jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/services"
+               connectionName="${OPENSHIFT_POSTGRESQL_DB_USERNAME}"
+               ConnectionPassword="${OPENSHIFT_POSTGRESQL_DB_PASSWORD}"
+               userTable="authuser"
+               userNameCol="username" userCredCol="password"
+               userRoleTable="authrole"
+               roleNameCol="rolename"
+                />
+
       <Host name="localhost"  appBase="webapps"
             unpackWARs="false" autoDeploy="true">
 

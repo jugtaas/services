@@ -23,6 +23,45 @@
         <servlet-name>Jug TAAS Web Services</servlet-name>
         <url-pattern>/services/*</url-pattern>
     </servlet-mapping>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Events management (insert)</web-resource-name>
+            <url-pattern>/services/events</url-pattern>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Events management (update and delete)</web-resource-name>
+            <url-pattern>/services/events/*</url-pattern>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Persons management (insert)</web-resource-name>
+            <url-pattern>/services/persons</url-pattern>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Persons management (update and delete)</web-resource-name>
+            <url-pattern>/services/persons/*</url-pattern>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>eventsadmin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>jugtaas</realm-name>
+    </login-config>
+    
+    <security-role>
+        <role-name>eventsadmin</role-name>
+    </security-role>
 
 </web-app>
 
