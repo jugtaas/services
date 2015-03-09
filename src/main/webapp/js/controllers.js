@@ -67,7 +67,25 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 	});
 });
 
-jugtaasApp.controller('EventController', function($scope, $http, $routeParams, $q) {
+jugtaasApp.controller('EventController', function($scope, $http, $route, $routeParams, $q) {
+
+	var getSpeakersFrom = function(speakers, persons) {
+		for(idx in speakers) {
+			var speaker = speakers[idx];
+
+			for(idx in $scope.persons) {
+				var person = $scope.persons[idx];
+				if(person.id == speaker.id) {
+					speaker = person;
+					break;
+				}
+			}
+
+			speakers[idx] = speaker;
+		}
+
+		return speakers;
+	};
 
 	$scope.event = {};
 
@@ -84,6 +102,7 @@ jugtaasApp.controller('EventController', function($scope, $http, $routeParams, $
 		$http.put('services/events/' + id, $scope.event)
 		.success(function(data) {
 			alert('update success');
+			$route.reload();
 		});
 	};
 
@@ -119,25 +138,6 @@ jugtaasApp.controller('EventController', function($scope, $http, $routeParams, $
 
 	var getEvent = $http.get('services/events/' + $routeParams.id);
 	var getPersons = $http.get('services/persons');
-
-	var getSpeakersFrom = function(speakers, persons) {
-		for(idx in speakers) {
-			var speaker = speakers[idx];
-
-			for(idx in $scope.persons) {
-				var person = $scope.persons[idx];
-				if(person.id == speaker.id) {
-					speaker = person;
-					break;
-				}
-			}
-
-			speakers[idx] = speaker;
-		}
-
-		return speakers;
-	};
-
 
 	$q.all([getEvent, getPersons]).then(function(results) { 
 		$scope.event = results[0].data;
