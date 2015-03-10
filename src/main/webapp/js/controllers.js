@@ -1,6 +1,5 @@
-(function(){ 
 
-var jugtaasApp = angular.module('jugtaasApp', ['ngRoute', 'Authentication']);
+var jugtaasApp = angular.module('jugtaasApp', ['ngRoute']);
 
 jugtaasApp.config(['$routeProvider',
   function($routeProvider) {
@@ -151,5 +150,3 @@ jugtaasApp.controller('PersonListController', function ($scope, $http) {
 		$scope.persons = persons;
 	});
 });
-
-})();
