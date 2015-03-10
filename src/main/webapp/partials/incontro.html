@@ -1,5 +1,5 @@
 <div class="jumbotron">
-    <div>
+    <div ng-controller="PersonListController">
       <form novalidate class="simple-form" ng-controller="EventController">
         Title*: <input type="text" ng-model="event.title" /><br />
         Speakers: <select multiple ng-multiple="true" ng-model="event.speakers" ng-options="person.name + ' ' + person.surname for person in persons"></select><br />

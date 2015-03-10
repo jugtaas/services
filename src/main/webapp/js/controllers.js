@@ -1,4 +1,4 @@
-var jugtaasApp = angular.module('jugtaasApp', ['ngRoute']);
+var jugtaasApp = angular.module('jugtaasApp', ['ngRoute', 'Authentication']);
 
 jugtaasApp.config(['$routeProvider',
   function($routeProvider) {
@@ -67,7 +67,7 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 	});
 });
 
-jugtaasApp.controller('EventController', function($scope, $http, $route, $routeParams, $q) {
+jugtaasApp.controller('EventController', function($scope, $http, $route, $routeParams, $q, $location) {
 
 	var getSpeakersFrom = function(speakers, persons) {
 		for(idx in speakers) {
@@ -96,12 +96,10 @@ jugtaasApp.controller('EventController', function($scope, $http, $route, $routeP
 	$scope.update = function(event) {
 		$scope.event = angular.copy(event);
 
-		//$scope.event.speakers = $scope.event.speakers.map(idToObject);
 		var id = $scope.event.id;
 
 		$http.put('services/events/' + id, $scope.event)
 		.success(function(data) {
-			alert('update success');
 			$route.reload();
 		});
 	};
@@ -109,19 +107,16 @@ jugtaasApp.controller('EventController', function($scope, $http, $route, $routeP
 	$scope.create = function(event) {
 		$scope.event = angular.copy(event);
 
-		$scope.event.speakers = $scope.event.speakers.map(idToObject);
 
 		$http.post('services/events/', $scope.event)
 		.success(function(data) {
-			alert('create success');
+			$location.path("events/" + data.id);
 		});
 	};
 
 	$scope.reset = function() {
 		$scope.event = angular.copy($scope.event);
 	};
-
-	//$scope.reset();
 
 	if(!$routeParams.id) {
 		return;
@@ -136,15 +131,21 @@ jugtaasApp.controller('EventController', function($scope, $http, $route, $routeP
 		}
 	}
 
-	var getEvent = $http.get('services/events/' + $routeParams.id);
-	var getPersons = $http.get('services/persons');
+	$http.get('services/events/' + $routeParams.id)
+	.success(function(data) {
+		$scope.event = data;
+		$scope.event.speakers = getSpeakersFrom($scope.event.speakers, $scope.persons);
+	});
+});
 
-	$q.all([getEvent, getPersons]).then(function(results) { 
-		$scope.event = results[0].data;
-		var persons = expandLinks(results[1].data._links);
+jugtaasApp.controller('PersonListController', function ($scope, $http) {
 
+	$http.get('services/persons')
+	.success(function(data) {
+		var persons = expandLinks(data._links);
+		for(idx in persons) {
+			var person = persons[idx];
+		}
 		$scope.persons = persons;
-
-		$scope.event.speakers = getSpeakersFrom($scope.event.speakers, persons);
-    });
+	});
 });
