@@ -6,7 +6,7 @@ jugtaasApp.config(['$routeProvider',
     $routeProvider.
       when('/events', {
         templateUrl: 'partials/incontri.html',
-        controller: 'EventListCtrl'
+        controller: 'EventListController'
       }).
       when('/events/new', {
         templateUrl: 'partials/incontro.html',
@@ -18,13 +18,13 @@ jugtaasApp.config(['$routeProvider',
       }).
       otherwise({
         redirectTo: 'partials/incontri.html',
-        controller: 'EventListCtrl'
+        controller: 'EventListController'
       });
   }
 ]);
 
+
 function expandLinks(links) {
-	var ret = [];
 	for(key in links) {
 		var url = links[key];
 		$.ajax({
@@ -38,25 +38,8 @@ function expandLinks(links) {
 	return ret;
 }
 
-function speakerToString(speaker) {
-	var string = speaker.name + " " + speaker.surname;
-	if(speaker.email) {
-		string = '<a href="mailto:' + speaker.email + '">' + string + '</a>';
-	} else if(speaker.url) {
-		string = '<a href="' + speaker.url + '">' + string + '</a>';
-	}
-	return string;
-}
-
-function speakersToString(speakers) {
-	for(idx in speakers) {
-		speakers[idx] = speakerToString(speakers[idx]);
-	}
-
-	return speakers.join(", ");
-}
-
-jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
+/*
+jugtaasApp.controller('EventListController', function ($scope, $http) {
 
 	$http.get('services/events')
 	.success(function(data) {
@@ -65,6 +48,21 @@ jugtaasApp.controller('EventListCtrl', function ($scope, $http) {
 			var event = events[idx];
 		}
 		$scope.events =  events;
+	});
+});
+*/
+
+jugtaasApp.controller('EventListController', function ($scope, $http) {
+
+	$http.get('services/events')
+	.success(function(data) {
+		$scope.events = [];
+
+		angular.forEach(data._links, function (eventUrl, idx) {
+          $http.get(eventUrl).then(function(response) {
+            $scope.events[idx] = response.data;
+          })
+        });
 	});
 });
 
@@ -143,10 +141,12 @@ jugtaasApp.controller('PersonListController', function ($scope, $http) {
 
 	$http.get('services/persons')
 	.success(function(data) {
-		var persons = expandLinks(data._links);
-		for(idx in persons) {
-			var person = persons[idx];
-		}
-		$scope.persons = persons;
+		$scope.persons = [];
+
+		angular.forEach(data._links, function (personUrl, idx) {
+          $http.get(personUrl).then(function(response) {
+            $scope.persons[idx] = response.data;
+          })
+        });
 	});
 });
