@@ -1,18 +1,57 @@
 <div class="jumbotron">
-    <div ng-controller="PersonListController">
-      <form novalidate class="simple-form" ng-controller="EventController">
-        Title*: <input type="text" ng-model="event.title" /><br />
-        Speakers: <select multiple ng-multiple="true" ng-model="event.speakers" ng-options="person.name + ' ' + person.surname for person in persons"></select><br />
-
-        Subtitle: <input type="text" ng-model="event.subtitle" /><br />
-        Date: <input type="datetime-local" ng-model="event.dateandtime" placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01:00:00" max="2025-12-31:00:00" required /><br />
-        Doodle (URL): <input type="url" ng-model="event.url" /><br />
-        Place: <input type="text" ng-model="event.place" /><br />
-        Abstract: <textarea type="text" ng-model="event.abstract"></textarea><br />
-        Slideshow (URL): <input type="url" ng-model="event.slideshow" /><br />
-        <input type="button" ng-click="reset()" value="Reset" />
-        <input type="submit" ng-if="event.id" ng-click="update(event)" value="Save" />
-        <input type="submit" ng-if="!event.id" ng-click="create(event)" value="Create" />
+    <div ng-controller="PersonListController" style="width:60%;margin:auto;">
+      <form novalidate class="form-horizontal" ng-controller="EventController">
+        <div class="form-group">
+            <label for="title" class="col-sm-4 control-label">Titolo</label>
+            <div class="col-sm-8">
+                <input id="title" type="text" ng-model="event.title" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subtitle" class="col-sm-4 control-label">Sottotitolo</label>
+            <div class="col-sm-8">
+                <input id="subtitle" type="text" ng-model="event.subtitle" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="speakers" class="col-sm-4 control-label">Relatori</label>
+            <div class="col-sm-8">
+                <select id="speakers" multiple ng-multiple="true" ng-model="event.speakers" ng-options="person.name + ' ' + person.surname for person in persons" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dateandtime" class="col-sm-4 control-label">Appuntamento</label>
+            <div class="col-sm-8">
+                <input id="dateandtime" type="datetime-local" ng-model="event.dateandtime" placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01:00:00" max="2025-12-31:00:00" required class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="url" class="col-sm-4 control-label">Doodle (URL)</label>
+            <div class="col-sm-8">
+                <input id="url" type="url" ng-model="event.url" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="place" class="col-sm-4 control-label">Luogo</label>
+            <div class="col-sm-8">
+                <input id="place" type="text" ng-model="event.place" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="abstract" class="col-sm-4 control-label">Abstract</label>
+            <div class="col-sm-8">
+                <textarea id="abstract" type="text" ng-model="event.abstract" class="form-control" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="slideshow" class="col-sm-4 control-label">Slideshow (URL)</label>
+            <div class="col-sm-8">
+                <input id="slideshow" type="text" ng-model="event.slideshow" class="form-control"/>
+            </div>
+        </div>
+        <input type="button" ng-click="reset()" value="Reset" class="btn btn-default"/>
+        <input type="submit" ng-if="event.id" ng-click="update(event)" value="Save" class="btn btn-default"/>
+        <input type="submit" ng-if="!event.id" ng-click="create(event)" value="Create" class="btn btn-default"/>
       </form>
     </div>
 </div>
