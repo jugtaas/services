@@ -30,7 +30,7 @@ jugtaasApp.config(['$routeProvider',
         templateUrl: 'partials/contacts.html',
       }).
       otherwise({
-        redirectTo: 'partials/home.html',
+        redirectTo: 'home',
       });
   }
 ]);
