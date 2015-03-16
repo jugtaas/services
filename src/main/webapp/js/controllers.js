@@ -4,24 +4,52 @@ var jugtaasApp = angular.module('jugtaasApp', ['ngRoute']);
 jugtaasApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/home', {
+        templateUrl: 'partials/home.html',
+      }).
       when('/events', {
         templateUrl: 'partials/incontri.html',
         controller: 'EventListController'
       }).
       when('/events/new', {
         templateUrl: 'partials/incontro.html',
-        //controller: 'EventController'
       }).
       when('/events/:id', {
         templateUrl: 'partials/incontro.html',
-        //controller: 'EventController'
+      }).
+      when('/mailinglist', {
+        templateUrl: 'partials/mailinglist.html',
+      }).
+      when('/users', {
+        templateUrl: 'partials/users.html',
+      }).
+      when('/manifesto', {
+        templateUrl: 'partials/manifesto.html',
+      }).
+      when('/contacts', {
+        templateUrl: 'partials/contacts.html',
       }).
       otherwise({
-        redirectTo: 'partials/incontri.html',
-        controller: 'EventListController'
+        redirectTo: 'partials/home.html',
       });
   }
 ]);
+
+jugtaasApp.directive('isActiveNav', [ '$location', function($location) {
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			scope.location = $location;
+			scope.$watch('location.path()', function(currentPath) {
+				if('#' + currentPath === element[0].attributes['href'].nodeValue) {
+					element.parent().addClass('active');
+				} else {
+					element.parent().removeClass('active');
+				}
+			});
+		}
+	};
+}]);
 
 
 function expandLinks(links) {
@@ -89,6 +117,7 @@ jugtaasApp.controller('EventController', function($scope, $http, $route, $routeP
 		return;
 	}
 
+/*
 	var findById = function(id, list) {
 		for(idx in list) {
 			var element = list[idx];
@@ -97,6 +126,7 @@ jugtaasApp.controller('EventController', function($scope, $http, $route, $routeP
 			}
 		}
 	}
+*/
 
 	var getSpeakersFrom = function(speakers, persons) {
 		for(s in speakers) {
